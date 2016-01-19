@@ -1,0 +1,32 @@
+
+[label_vector, instance_matrix] = libsvmread('trainingData.txt'); 
+
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 0.01 -g 5 -b 1');  % acc=10.000
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 1 -g 5 -b 1');     % acc=19.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 10 -g 5 -b 1');    % acc=19.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 10 -g 1 -b 1');    % acc=36.333
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 10 -g 0.01 -b 1'); % acc=63.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 10 -g 0.001 -b 1');% acc=53.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 15 -g 0.001 -b 1');% acc=57.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 20 -g 0.001 -b 1');% acc=58.166
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 30 -g 0.001 -b 1');% acc=59.163
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 30 -g 0.02 -b 1'); % acc=65.166
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 30 -g 0.2 -b 1');  % 58.666
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 25 -g 0.02 -b 1'); % 65.000
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 20 -g 0.02 -b 1'); % 66.166
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 15 -g 0.02 -b 1'); % 64.666
+
+model = svmtrain(label_vector, instance_matrix, '-t 2 -b 1');  % 32.333
+
+% optimal is this: 
+% sigma=5  
+model = svmtrain(label_vector, instance_matrix, '-t 2 -c 20 -g 0.02 -b 1');
+
+[test_label, test_data] = libsvmread('testData.txt');
+[predict_label, accuracy, dec_values] = svmpredict(test_label, test_data, model, '-b 1');
+
+fid=fopen('SVM_pred.txt','w')
+fdisp(fid,predict_label)
+fclose(fid)
+
+
